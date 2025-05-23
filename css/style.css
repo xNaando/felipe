@@ -443,25 +443,44 @@ nav ul li a:hover:after {
 }
 
 /* Depoimentos */
+.testimonials {
+    position: relative;
+    padding: 80px 0;
+}
+
+.testimonials-wrapper {
+    position: relative;
+    overflow: hidden;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
 .testimonials-slider {
-    margin-bottom: 30px;
     display: flex;
-    overflow-x: hidden;
+    transition: transform 0.5s ease-in-out;
+    margin-bottom: 30px;
+    width: 500%;
+    /* 100% * 5 cards */
 }
 
 .testimonial-card {
+    width: 20%;
+    /* 100% / 5 cards */
     background: var(--light);
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(66, 24, 0, 0.05);
-    margin: 10px;
-    flex: 0 0 100%;
+    margin: 0 10px;
+    min-height: 280px;
+    flex-shrink: 0;
 }
 
 .testimonial-text {
     font-style: italic;
     margin-bottom: 20px;
     color: var(--gray-dark);
+    font-size: 16px;
+    line-height: 1.8;
 }
 
 .testimonial-author {
@@ -490,6 +509,7 @@ nav ul li a:hover:after {
     display: flex;
     justify-content: center;
     gap: 10px;
+    margin-top: 20px;
 }
 
 .testimonials-indicators span {
@@ -498,10 +518,12 @@ nav ul li a:hover:after {
     background: var(--gray-medium);
     border-radius: 50%;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .testimonials-indicators span.active {
     background: var(--secondary);
+    transform: scale(1.2);
 }
 
 /* Galeria */
@@ -763,10 +785,11 @@ footer {
 
 .footer-bottom p {
     margin-bottom: 10px;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .footer-bottom i {
-    color: var(--error);
+    color: #ff5c5c;
 }
 
 /* Media Queries */
@@ -880,4 +903,24 @@ nav ul li a.active {
 nav ul li a.active:after {
     width: 100%;
     background-color: var(--secondary);
+}
+
+.slider-indicators {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.slider-indicator {
+    width: 12px;
+    height: 12px;
+    background: #ccc;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.slider-indicator.active {
+    background: var(--secondary);
 }
