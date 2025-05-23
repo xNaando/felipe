@@ -853,6 +853,10 @@ footer {
     margin-bottom: 10px;
 }
 
+.footer-logo p {
+    color: #fff !important;
+}
+
 .footer-links h3,
 .footer-services h3,
 .footer-contact h3 {
@@ -986,6 +990,18 @@ footer {
 
     .footer-content {
         grid-template-columns: 1fr;
+    }
+
+    .footer-logo {
+        margin-bottom: 0;
+    }
+
+    .footer-logo img {
+        margin-bottom: 0;
+    }
+
+    .footer-logo h2 {
+        margin-bottom: 0;
     }
 }
 
