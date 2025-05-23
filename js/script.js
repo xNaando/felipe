@@ -34,13 +34,16 @@ document.addEventListener('DOMContentLoaded', function () {
     // Inicializar componentes
     initTestimonialSlider();
 
-    // Iniciar animação das estatísticas se o elemento estiver visível
-    setTimeout(() => {
+    // Iniciar animação das estatísticas imediatamente
+    animateStats();
+
+    // Adicionar a animação das estatísticas ao scroll também
+    window.addEventListener('scroll', function () {
         const statsSection = document.getElementById('stats');
         if (statsSection && isElementInViewport(statsSection)) {
             animateStats();
         }
-    }, 500);
+    });
 
     // Accordion para FAQs
     const faqItems = document.querySelectorAll('.faq-item');
@@ -195,39 +198,45 @@ function initTestimonialSlider() {
     startAutoSlide();
 }
 
+// Variável para controlar se a animação já foi executada
+let statsAnimated = false;
+
 // Função para animar os números nas estatísticas
 function animateStats() {
+    // Se já animou, não anima novamente
+    if (statsAnimated) return;
+
     const statNumbers = document.querySelectorAll('.stat-number');
 
     statNumbers.forEach(stat => {
-        // Obter texto original para verificar se tem + ou % no final
-        const originalText = stat.textContent;
-        const finalValue = parseInt(originalText.replace(/\D/g, ''));
-        const hasPlusSign = originalText.includes('+');
+        // Salvar o valor original para referência
+        const originalValue = stat.textContent;
+        const finalValue = parseInt(originalValue.replace(/\D/g, ''));
+
+        // Determinar se tem símbolos especiais
+        const parentText = stat.nextElementSibling ? stat.nextElementSibling.textContent : '';
+        const hasPercent = parentText.includes('%');
+
         let startValue = 0;
+        const duration = 2000; // 2 segundos
+        const interval = 20; // 20ms entre cada atualização
+        const steps = duration / interval;
+        const increment = finalValue / steps;
 
-        // Iniciar animação apenas se o número for maior que zero
-        if (finalValue > 0) {
-            const duration = 2000; // 2 segundos
-            const interval = 20; // 20ms entre cada atualização
-            const steps = duration / interval;
-            const increment = finalValue / steps;
+        let counter = setInterval(() => {
+            startValue += increment;
+            if (startValue >= finalValue) {
+                startValue = finalValue;
+                clearInterval(counter);
+            }
 
-            let counter = setInterval(() => {
-                startValue += increment;
-                if (startValue >= finalValue) {
-                    startValue = finalValue;
-                    clearInterval(counter);
-                }
-
-                // Montar o texto com os sinais adequados
-                let text = Math.floor(startValue).toString();
-                if (hasPlusSign) text += '+';
-
-                stat.textContent = text;
-            }, interval);
-        }
+            // Formatar o número com o símbolo apropriado
+            stat.textContent = Math.floor(startValue);
+        }, interval);
     });
+
+    // Marcar como animado
+    statsAnimated = true;
 }
 
 // Adicionando o observador para animação das estatísticas
