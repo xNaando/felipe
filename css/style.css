@@ -975,6 +975,10 @@ footer {
 }
 
 @media (max-width: 576px) {
+    .hero {
+        padding-top: 24px;
+    }
+
     .hero-buttons {
         flex-direction: column;
         gap: 10px;
