@@ -975,8 +975,12 @@ footer {
 }
 
 @media (max-width: 576px) {
+    .hero-image img {
+        margin-bottom: 0;
+    }
+
     .hero {
-        padding-top: 24px;
+        padding-bottom: 24px;
     }
 
     .hero-buttons {
