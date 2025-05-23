@@ -978,6 +978,18 @@ footer {
         color: #fff !important;
         background-color: var(--secondary) !important;
     }
+
+    .img-mobile-contact {
+        display: block !important;
+        width: 100%;
+        max-width: 100%;
+        margin: 24px 0;
+        border-radius: 16px;
+    }
+
+    .contact-form>img {
+        display: none !important;
+    }
 }
 
 @media (max-width: 576px) {
