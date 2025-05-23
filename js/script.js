@@ -34,16 +34,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Inicializar componentes
     initTestimonialSlider();
 
-    // Iniciar animação das estatísticas imediatamente
-    animateStats();
-
-    // Adicionar a animação das estatísticas ao scroll também
-    window.addEventListener('scroll', function () {
-        const statsSection = document.getElementById('stats');
-        if (statsSection && isElementInViewport(statsSection)) {
-            animateStats();
-        }
-    });
+    // Iniciar animação das estatísticas
+    countStats();
 
     // Accordion para FAQs
     const faqItems = document.querySelectorAll('.faq-item');
@@ -198,62 +190,6 @@ function initTestimonialSlider() {
     startAutoSlide();
 }
 
-// Variável para controlar se a animação já foi executada
-let statsAnimated = false;
-
-// Função para animar os números nas estatísticas
-function animateStats() {
-    // Se já animou, não anima novamente
-    if (statsAnimated) return;
-
-    const statNumbers = document.querySelectorAll('.stat-number');
-
-    statNumbers.forEach(stat => {
-        // Salvar o valor original para referência
-        const originalValue = stat.textContent;
-        const finalValue = parseInt(originalValue.replace(/\D/g, ''));
-
-        // Determinar se tem símbolos especiais
-        const parentText = stat.nextElementSibling ? stat.nextElementSibling.textContent : '';
-        const hasPercent = parentText.includes('%');
-
-        let startValue = 0;
-        const duration = 2000; // 2 segundos
-        const interval = 20; // 20ms entre cada atualização
-        const steps = duration / interval;
-        const increment = finalValue / steps;
-
-        let counter = setInterval(() => {
-            startValue += increment;
-            if (startValue >= finalValue) {
-                startValue = finalValue;
-                clearInterval(counter);
-            }
-
-            // Formatar o número com o símbolo apropriado
-            stat.textContent = Math.floor(startValue);
-        }, interval);
-    });
-
-    // Marcar como animado
-    statsAnimated = true;
-}
-
-// Adicionando o observador para animação das estatísticas
-const statsSection = document.getElementById('stats');
-if (statsSection) {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateStats();
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    observer.observe(statsSection);
-}
-
 // Adicionar classe active nos links do menu quando a seção correspondente estiver visível
 window.addEventListener('scroll', function () {
     const sections = document.querySelectorAll('section');
@@ -287,4 +223,31 @@ function isElementInViewport(el) {
         rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
         rect.right <= (window.innerWidth || document.documentElement.clientWidth)
     );
+}
+
+// Função para animar a contagem dos números
+function countStats() {
+    const statNumbers = document.querySelectorAll('.stat-number');
+
+    statNumbers.forEach(stat => {
+        const finalValue = parseInt(stat.getAttribute('data-value'));
+        const hasPercent = stat.nextElementSibling.textContent.includes('%');
+
+        let startValue = 0;
+        const duration = 2000; // 2 segundos
+        const interval = 20; // 20ms entre cada atualização
+        const steps = duration / interval;
+        const increment = finalValue / steps;
+
+        let counter = setInterval(() => {
+            startValue += increment;
+
+            if (startValue >= finalValue) {
+                startValue = finalValue;
+                clearInterval(counter);
+            }
+
+            stat.textContent = Math.floor(startValue);
+        }, interval);
+    });
 } 
