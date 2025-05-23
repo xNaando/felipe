@@ -31,8 +31,16 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Slider de depoimentos
+    // Inicializar componentes
     initTestimonialSlider();
+
+    // Iniciar animação das estatísticas se o elemento estiver visível
+    setTimeout(() => {
+        const statsSection = document.getElementById('stats');
+        if (statsSection && isElementInViewport(statsSection)) {
+            animateStats();
+        }
+    }, 500);
 
     // Accordion para FAQs
     const faqItems = document.querySelectorAll('.faq-item');
@@ -187,6 +195,56 @@ function initTestimonialSlider() {
     startAutoSlide();
 }
 
+// Função para animar os números nas estatísticas
+function animateStats() {
+    const statNumbers = document.querySelectorAll('.stat-number');
+
+    statNumbers.forEach(stat => {
+        // Obter texto original para verificar se tem + ou % no final
+        const originalText = stat.textContent;
+        const finalValue = parseInt(originalText.replace(/\D/g, ''));
+        const hasPlusSign = originalText.includes('+');
+        let startValue = 0;
+
+        // Iniciar animação apenas se o número for maior que zero
+        if (finalValue > 0) {
+            const duration = 2000; // 2 segundos
+            const interval = 20; // 20ms entre cada atualização
+            const steps = duration / interval;
+            const increment = finalValue / steps;
+
+            let counter = setInterval(() => {
+                startValue += increment;
+                if (startValue >= finalValue) {
+                    startValue = finalValue;
+                    clearInterval(counter);
+                }
+
+                // Montar o texto com os sinais adequados
+                let text = Math.floor(startValue).toString();
+                if (hasPlusSign) text += '+';
+
+                stat.textContent = text;
+            }, interval);
+        }
+    });
+}
+
+// Adicionando o observador para animação das estatísticas
+const statsSection = document.getElementById('stats');
+if (statsSection) {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateStats();
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    observer.observe(statsSection);
+}
+
 // Adicionar classe active nos links do menu quando a seção correspondente estiver visível
 window.addEventListener('scroll', function () {
     const sections = document.querySelectorAll('section');
@@ -209,4 +267,15 @@ window.addEventListener('scroll', function () {
             link.classList.add('active');
         }
     });
-}); 
+});
+
+// Função para verificar se um elemento está visível na viewport
+function isElementInViewport(el) {
+    const rect = el.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+} 

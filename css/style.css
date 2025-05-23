@@ -418,28 +418,80 @@ nav ul li a:hover:after {
 
 /* Estatísticas */
 .stats {
-    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    background-color: var(--primary);
+    background-image: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+    position: relative;
     color: var(--light);
-    padding: 60px 0;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.stats::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(66, 24, 0, 0.9), rgba(168, 111, 30, 0.85));
+    z-index: 1;
+}
+
+.stats .container {
+    position: relative;
+    z-index: 2;
+}
+
+.stats .section-header h2,
+.stats .section-header p {
+    color: white;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 30px;
-    text-align: center;
+    margin-top: 50px;
+}
+
+.stat-item {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    padding: 30px 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-item:hover {
+    transform: translateY(-10px);
+    background-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.stat-icon {
+    font-size: 48px;
+    color: white;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .stat-number {
-    font-size: 48px;
+    font-size: 54px;
     font-weight: 700;
-    margin-bottom: 10px;
-    color: var(--light);
+    margin-bottom: 15px;
+    color: white;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .stat-text {
     font-size: 18px;
-    color: rgba(255, 255, 255, 0.8);
+    color: white;
+    font-weight: 500;
 }
 
 /* Depoimentos */
