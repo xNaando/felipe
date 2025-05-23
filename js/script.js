@@ -34,8 +34,33 @@ document.addEventListener('DOMContentLoaded', function () {
     // Inicializar componentes
     initTestimonialSlider();
 
-    // Iniciar animação das estatísticas
-    countStats();
+    // Inicializar contador de estatísticas apenas quando o usuário visualizar a seção
+    const statsSection = document.getElementById('stats');
+
+    if (statsSection) {
+        // Criar um novo Intersection Observer
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // Quando a seção de estatísticas entrar na viewport
+                if (entry.isIntersecting && !statsSection.classList.contains('counted')) {
+                    // Marcar como contado para não repetir a animação
+                    statsSection.classList.add('counted');
+
+                    // Iniciar a contagem
+                    countStats();
+
+                    // Opcional: parar de observar após a contagem
+                    statsObserver.unobserve(statsSection);
+                }
+            });
+        }, {
+            // Configurar para acionar quando pelo menos 20% da seção estiver visível
+            threshold: 0.2
+        });
+
+        // Começar a observar a seção de estatísticas
+        statsObserver.observe(statsSection);
+    }
 
     // Accordion para FAQs
     const faqItems = document.querySelectorAll('.faq-item');
