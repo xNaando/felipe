@@ -251,16 +251,15 @@ nav ul li a:hover:after {
     width: 100%;
 }
 
-.btn-contato {
-    background-color: var(--secondary);
-    color: var(--light);
-    padding: 8px 20px;
-    border-radius: 30px;
-}
-
-.btn-contato:hover {
-    background-color: var(--secondary-dark);
-    color: var(--light);
+.btn-contato,
+nav ul li a.btn-contato,
+nav ul li a.btn-contato.active {
+    color: #fff !important;
+    background-color: var(--secondary) !important;
+    border-radius: 30px !important;
+    padding: 8px 20px !important;
+    font-weight: 600;
+    transition: background 0.3s, color 0.3s;
 }
 
 .menu-mobile {
