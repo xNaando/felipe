@@ -138,10 +138,10 @@ function initTestimonialSlider() {
     let currentIndex = 0;
     let slideInterval;
 
-    // Solução simples para carrossel
-    testimonialCards.forEach((card, index) => {
-        card.style.width = '100%';
-        card.style.flexShrink = '0';
+    // Configurar a largura do slider para 500% (5 slides) e cada slide para 20%
+    testimonialSlider.style.width = `${testimonialCards.length * 100}%`;
+    testimonialCards.forEach(card => {
+        card.style.width = `${100 / testimonialCards.length}%`;
     });
 
     // Função para mostrar um slide específico
@@ -154,8 +154,7 @@ function initTestimonialSlider() {
             currentIndex = index;
         }
 
-        console.log(`Mostrando slide ${currentIndex}`);
-        testimonialSlider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        testimonialSlider.style.transform = `translateX(-${currentIndex * (100 / testimonialCards.length)}%)`;
 
         // Atualizar indicadores
         indicators.forEach((indicator, i) => {
@@ -163,7 +162,7 @@ function initTestimonialSlider() {
         });
     }
 
-    // Configurar indicadores
+    // Configurar indicadores para serem clicáveis
     indicators.forEach((indicator, index) => {
         indicator.addEventListener('click', () => {
             clearInterval(slideInterval);
@@ -206,48 +205,4 @@ window.addEventListener('scroll', function () {
             link.classList.add('active');
         }
     });
-});
-
-// Testimonials Slider
-const sliderInit = () => {
-    const slider = document.querySelector('.testimonials-slider');
-    const indicators = document.querySelectorAll('.slider-indicator');
-    const totalSlides = indicators.length;
-    let currentSlide = 0;
-
-    // Função para mostrar o slide específico
-    const showSlide = (index) => {
-        slider.style.transform = `translateX(-${index * 20}%)`;
-
-        // Atualiza indicadores
-        indicators.forEach((indicator, i) => {
-            indicator.classList.toggle('active', i === index);
-        });
-
-        currentSlide = index;
-    };
-
-    // Configurar cliques nos indicadores
-    indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => showSlide(index));
-    });
-
-    // Avançar para o próximo slide
-    const nextSlide = () => {
-        const next = (currentSlide + 1) % totalSlides;
-        showSlide(next);
-    };
-
-    // Iniciar o slider no primeiro slide
-    showSlide(0);
-
-    // Avançar automaticamente a cada 5 segundos
-    setInterval(nextSlide, 5000);
-};
-
-// Inicializar todos os componentes
-window.addEventListener('DOMContentLoaded', () => {
-    toggleMobileNav();
-    initWhatsAppButton();
-    sliderInit();
 }); 
