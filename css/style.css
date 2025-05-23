@@ -1011,6 +1011,10 @@ footer {
     .footer-logo h2 {
         margin-bottom: 0;
     }
+
+    .contact-content {
+        gap: 10px;
+    }
 }
 
 /* Animações ao Scroll */
