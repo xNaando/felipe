@@ -131,16 +131,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Adicionar classe para animar elementos específicos
     function addAnimationClasses() {
-        document.querySelectorAll('.service-card').forEach((card, index) => {
-            card.classList.add('animate-on-scroll');
-            card.style.animationDelay = (index * 0.1) + 's';
-        });
-
-        // Removido para evitar bug de sumiço das imagens da galeria
-        // document.querySelectorAll('.gallery-item').forEach((item, index) => {
-        //     item.classList.add('animate-on-scroll');
-        //     item.style.animationDelay = (index * 0.1) + 's';
+        // Removido para evitar bug de sumiço dos cards de serviço
+        // document.querySelectorAll('.service-card').forEach((card, index) => {
+        //     card.classList.add('animate-on-scroll');
+        //     card.style.animationDelay = (index * 0.1) + 's';
         // });
+
+        // A galeria já está sem animação
     }
 
     addAnimationClasses();
