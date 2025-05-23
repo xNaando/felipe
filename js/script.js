@@ -1,0 +1,191 @@
+document.addEventListener('DOMContentLoaded', function () {
+    // Menu Mobile
+    const menuMobile = document.querySelector('.menu-mobile');
+    const navLinks = document.querySelector('nav ul');
+
+    if (menuMobile) {
+        menuMobile.addEventListener('click', function () {
+            navLinks.classList.toggle('active');
+            menuMobile.classList.toggle('active');
+        });
+    }
+
+    // Animação de rolagem suave para links âncora
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+
+            if (target) {
+                window.scrollTo({
+                    top: target.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+
+                // Fechar menu mobile se estiver aberto
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    menuMobile.classList.remove('active');
+                }
+            }
+        });
+    });
+
+    // Slider de depoimentos
+    const testimonialSlider = document.querySelector('.testimonials-slider');
+    const testimonialCards = document.querySelectorAll('.testimonial-card');
+    const indicators = document.querySelectorAll('.testimonials-indicators span');
+    let currentIndex = 0;
+
+    if (testimonialSlider && testimonialCards.length > 0 && indicators.length > 0) {
+        // Função para trocar o slide
+        function showSlide(index) {
+            if (index >= testimonialCards.length) {
+                currentIndex = 0;
+            } else if (index < 0) {
+                currentIndex = testimonialCards.length - 1;
+            } else {
+                currentIndex = index;
+            }
+
+            const offset = -currentIndex * 100 + '%';
+            testimonialSlider.style.transform = 'translateX(' + offset + ')';
+
+            // Atualizar indicadores
+            indicators.forEach((indicator, i) => {
+                indicator.classList.toggle('active', i === currentIndex);
+            });
+        }
+
+        // Configurar indicadores
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+
+        // Troca automática de slides
+        setInterval(() => {
+            showSlide(currentIndex + 1);
+        }, 5000);
+
+        // Configurar estilo inicial
+        testimonialSlider.style.transition = 'transform 0.5s ease-in-out';
+        testimonialCards.forEach(card => {
+            card.style.flex = '0 0 100%';
+        });
+    }
+
+    // Accordion para FAQs
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    if (faqItems.length > 0) {
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+
+                // Fechar todos os itens
+                faqItems.forEach(faqItem => {
+                    faqItem.classList.remove('active');
+                });
+
+                // Abrir o clicado (se não estava aberto)
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Abrir o primeiro FAQ por padrão
+        faqItems[0].classList.add('active');
+    }
+
+    // Formulário de contato
+    const contactForm = document.getElementById('form-contato');
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(contactForm);
+            const formValues = {};
+
+            for (let [key, value] of formData.entries()) {
+                formValues[key] = value;
+            }
+
+            // Aqui você poderia enviar os dados para um servidor
+            // Por enquanto, vamos apenas simular o envio
+            alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
+            contactForm.reset();
+
+            // Redirecionar para WhatsApp após o envio
+            const phone = '5531940504512';
+            const message = encodeURIComponent(`Olá! Acabei de enviar um formulário de contato no site. Nome: ${formValues.nome}`);
+            window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+        });
+    }
+
+    // Animações ao scroll
+    const animateElements = document.querySelectorAll('.animate-on-scroll');
+
+    function checkScroll() {
+        const triggerBottom = window.innerHeight / 5 * 4;
+
+        animateElements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+
+            if (elementTop < triggerBottom) {
+                element.classList.add('visible');
+            }
+        });
+    }
+
+    // Adicionar classe para animar elementos específicos
+    function addAnimationClasses() {
+        document.querySelectorAll('.service-card').forEach((card, index) => {
+            card.classList.add('animate-on-scroll');
+            card.style.animationDelay = (index * 0.1) + 's';
+        });
+
+        document.querySelectorAll('.stat-item').forEach((item, index) => {
+            item.classList.add('animate-on-scroll');
+            item.style.animationDelay = (index * 0.1) + 's';
+        });
+
+        document.querySelectorAll('.gallery-item').forEach((item, index) => {
+            item.classList.add('animate-on-scroll');
+            item.style.animationDelay = (index * 0.1) + 's';
+        });
+    }
+
+    addAnimationClasses();
+    window.addEventListener('scroll', checkScroll);
+    checkScroll(); // Verificar elementos visíveis no carregamento inicial
+});
+
+// Adicionar classe active nos links do menu quando a seção correspondente estiver visível
+window.addEventListener('scroll', function () {
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('nav ul li a');
+
+    let currentSection = '';
+
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+
+        if (pageYOffset >= (sectionTop - 200)) {
+            currentSection = section.getAttribute('id');
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + currentSection) {
+            link.classList.add('active');
+        }
+    });
+}); 
