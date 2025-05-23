@@ -138,10 +138,12 @@ function initTestimonialSlider() {
     let currentIndex = 0;
     let slideInterval;
 
-    // Configurar a largura do slider para 500% (5 slides) e cada slide para 20%
-    testimonialSlider.style.width = `${testimonialCards.length * 100}%`;
+    // Configurar larguras precisas sem margens
+    const totalCards = testimonialCards.length;
+    testimonialSlider.style.width = `${totalCards * 100}%`;
+
     testimonialCards.forEach(card => {
-        card.style.width = `${100 / testimonialCards.length}%`;
+        card.style.width = `${100 / totalCards}%`;
     });
 
     // Função para mostrar um slide específico
@@ -154,7 +156,9 @@ function initTestimonialSlider() {
             currentIndex = index;
         }
 
-        testimonialSlider.style.transform = `translateX(-${currentIndex * (100 / testimonialCards.length)}%)`;
+        // Aplicar transformação exata
+        const slideWidth = 100 / totalCards;
+        testimonialSlider.style.transform = `translateX(-${currentIndex * slideWidth}%)`;
 
         // Atualizar indicadores
         indicators.forEach((indicator, i) => {
