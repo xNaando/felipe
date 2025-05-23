@@ -469,6 +469,28 @@ nav ul li a:hover:after {
     padding: 20px;
 }
 
+.static-item {
+    /* Garante visibilidade permanente */
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background-color: rgba(255, 255, 255, 0.25) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3) !important;
+    border: 3px solid rgba(255, 255, 255, 0.4) !important;
+    animation: none !important;
+    transform: translateY(0) !important;
+    transition: transform 0.3s ease !important;
+}
+
+.static-item:hover {
+    transform: translateY(-15px) !important;
+    background-color: rgba(255, 255, 255, 0.35) !important;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
 .stat-item {
     background-color: rgba(255, 255, 255, 0.25);
     border-radius: 15px;

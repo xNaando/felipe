@@ -111,11 +111,6 @@ document.addEventListener('DOMContentLoaded', function () {
             card.style.animationDelay = (index * 0.1) + 's';
         });
 
-        document.querySelectorAll('.stat-item').forEach((item, index) => {
-            item.classList.add('animate-on-scroll');
-            item.style.animationDelay = (index * 0.1) + 's';
-        });
-
         document.querySelectorAll('.gallery-item').forEach((item, index) => {
             item.classList.add('animate-on-scroll');
             item.style.animationDelay = (index * 0.1) + 's';
@@ -225,29 +220,28 @@ function isElementInViewport(el) {
     );
 }
 
-// Função para animar a contagem dos números
+// Função simplificada para animação dos números, sem animações CSS
 function countStats() {
-    const statNumbers = document.querySelectorAll('.stat-number');
+    // Selecionar todos os elementos com a classe .stat-number
+    const statElements = document.querySelectorAll('.stat-number');
 
-    statNumbers.forEach(stat => {
-        const finalValue = parseInt(stat.getAttribute('data-value'));
-        const hasPercent = stat.nextElementSibling.textContent.includes('%');
+    // Para cada elemento, animar o número
+    statElements.forEach(element => {
+        const finalValue = parseInt(element.getAttribute('data-value'));
+        let currentValue = 0;
 
-        let startValue = 0;
-        const duration = 2000; // 2 segundos
-        const interval = 20; // 20ms entre cada atualização
-        const steps = duration / interval;
-        const increment = finalValue / steps;
+        // Definir intervalo de atualização
+        const updateInterval = setInterval(() => {
+            // Incrementar valor atual
+            currentValue += Math.ceil(finalValue / 25);
 
-        let counter = setInterval(() => {
-            startValue += increment;
-
-            if (startValue >= finalValue) {
-                startValue = finalValue;
-                clearInterval(counter);
+            // Se atingiu ou ultrapassou o valor final, parar animação
+            if (currentValue >= finalValue) {
+                clearInterval(updateInterval);
+                element.textContent = finalValue;
+            } else {
+                element.textContent = currentValue;
             }
-
-            stat.textContent = Math.floor(startValue);
-        }, interval);
+        }, 80);
     });
 } 
