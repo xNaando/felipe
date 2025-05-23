@@ -972,6 +972,13 @@ footer {
     .testimonial-card {
         margin: 0 0 20px 0;
     }
+
+    .btn-contato,
+    nav ul li a.btn-contato,
+    nav ul li a.btn-contato.active {
+        color: #fff !important;
+        background-color: var(--secondary) !important;
+    }
 }
 
 @media (max-width: 576px) {
