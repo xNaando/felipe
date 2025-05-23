@@ -136,10 +136,11 @@ document.addEventListener('DOMContentLoaded', function () {
             card.style.animationDelay = (index * 0.1) + 's';
         });
 
-        document.querySelectorAll('.gallery-item').forEach((item, index) => {
-            item.classList.add('animate-on-scroll');
-            item.style.animationDelay = (index * 0.1) + 's';
-        });
+        // Removido para evitar bug de sumiço das imagens da galeria
+        // document.querySelectorAll('.gallery-item').forEach((item, index) => {
+        //     item.classList.add('animate-on-scroll');
+        //     item.style.animationDelay = (index * 0.1) + 's';
+        // });
     }
 
     addAnimationClasses();
